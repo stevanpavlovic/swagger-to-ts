@@ -1,21 +1,12 @@
-import swaggerToTS, { Options } from '../src';
+import { OpenAPI2, Swagger2TSOptions } from '../src/types';
+import swaggerToTS from '../src';
 
-describe('swaggerToTS', () => {
-  it('is able to parse a Swagger 2 spec', () => {
-    const spec = { swagger: '2.0', definitions: {} };
-    const options: Options = { warning: false };
-    expect(swaggerToTS(spec, options)).toBe('declare namespace OpenAPI2 {}\n');
-  });
-
-  it('assumes Swagger 2 if version missing', () => {
-    const spec = { definitions: {} };
-    const options: Options = { warning: false };
-    expect(swaggerToTS(spec, options)).toBe('declare namespace OpenAPI2 {}\n');
-  });
-
-  it('should not render a wrapper when passing false', () => {
-    const spec = { swagger: '2.0', definitions: {} };
-    const options: Options = { wrapper: false, warning: false };
-    expect(swaggerToTS(spec, options)).toBe('');
+describe('OpenAPI 2', () => {
+  describe('wrapper', () => {
+    it('false', () => {
+      const schema = { swagger: '2.0', definitions: {} } as OpenAPI2;
+      const options: Swagger2TSOptions = { wrapper: false, warning: false };
+      expect(swaggerToTS(schema, options)).toBe('');
+    });
   });
 });
